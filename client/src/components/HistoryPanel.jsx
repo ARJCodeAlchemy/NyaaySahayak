@@ -1,0 +1,47 @@
+import React from 'react';
+
+// Format ISO date strings into a local readable format
+function formatDate(value) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Unknown date";
+  return date.toLocaleString();
+}
+
+// Sidebar component to list previously saved case analyses
+export default function HistoryPanel({ history, onSelect }) {
+  return (
+    <div className="bg-surface rounded-xl border border-border shadow-sm p-5 transition-colors duration-300">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-headline text-base font-semibold text-text-primary">Saved Analysis History</h3>
+        <span className="font-label text-xs text-text-secondary">{history.length} records</span>
+      </div>
+
+      {history.length === 0 ? (
+        <p className="font-body text-sm text-text-secondary">No history yet. Run an analysis to save your first record.</p>
+      ) : (
+        <div className="space-y-2 max-h-80 overflow-auto pr-1">
+          {history.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => onSelect(item)}
+              className="w-full text-left border border-border rounded-xl px-3 py-3 hover:bg-primary/5 hover:border-primary/40 transition-colors duration-200 cursor-pointer"
+            >
+              <div className="flex items-center justify-between gap-3 mb-1">
+                <span className="font-label text-xs font-semibold uppercase tracking-wide text-primary">
+                  {item.inputType}
+                </span>
+                <span className="font-label text-[10px] text-text-secondary">
+                  {formatDate(item.createdAt)}
+                </span>
+              </div>
+              <p className="font-body text-xs text-text-secondary line-clamp-2">
+                {item.inputPreview}
+              </p>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}

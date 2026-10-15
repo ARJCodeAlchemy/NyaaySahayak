@@ -1,0 +1,255 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design Tokens & Theme Setup */
+:root {
+  --bg: #f8fafc;
+  --surface: #ffffff;
+  --primary: #1d4ed8;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e293b;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border: #e2e8f0;
+  --success: #10b981;
+}
+
+.dark {
+  --bg: #030712;
+  --surface: #0b0f19;
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+  --primary-dark: #0f172a;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --border: #1f2937;
+  --success: #34d399;
+}
+
+@theme {
+  --color-background: var(--bg);
+  --color-surface: var(--surface);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-border: var(--border);
+  --color-success-custom: var(--success);
+
+  --font-headline: "Outfit", "Plus Jakarta Sans", sans-serif;
+  --font-body: "Plus Jakarta Sans", sans-serif;
+}
+
+/* Global Reset & Body Styles */
+html,
+body,
+#root {
+  min-height: 100vh;
+}
+
+body {
+  @apply bg-background text-text-primary transition-colors duration-300;
+  margin: 0;
+  font-family: var(--font-body);
+  background-image:
+    radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--primary) 6%, transparent), transparent 40%),
+    radial-gradient(circle at 90% 100%, color-mix(in srgb, var(--primary-light) 6%, transparent), transparent 35%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium Component Classes */
+
+/* 1. App Card (Glassmorphism & Border Highlights) */
+.app-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--surface) 98%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+  backdrop-filter: blur(8px);
+  transition: transform 250ms ease, box-shadow 250ms ease, border-color 250ms ease;
+}
+
+.app-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--surface) 92%, #ffffff 8%) 0%, transparent 45%),
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--primary-light) 8%, transparent) 0%, transparent 50%);
+  opacity: 0.85;
+}
+
+.app-card>* {
+  position: relative;
+  z-index: 1;
+}
+
+.app-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+
+.dark .app-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.dark .app-card::before {
+  background:
+    linear-gradient(155deg, color-mix(in srgb, var(--surface) 88%, #ffffff 12%) 0%, transparent 45%),
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--primary-light) 10%, transparent) 0%, transparent 50%);
+}
+
+.dark .app-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+}
+
+/* 2. Premium Inputs */
+.app-input {
+  background: color-mix(in srgb, var(--surface) 95%, var(--bg) 5%);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  transition: border-color 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+
+.app-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+/* 3. Interactive Buttons */
+.app-button-primary {
+  background: var(--primary);
+  color: #ffffff;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+  border: 1px solid color-mix(in srgb, var(--primary) 85%, #ffffff 15%);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.app-button-primary:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.05);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.app-button-primary:active {
+  transform: translateY(0);
+}
+
+.app-button-secondary {
+  background: color-mix(in srgb, var(--surface) 90%, var(--bg) 10%);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  transition: background-color 200ms ease, border-color 200ms ease, transform 200ms ease;
+}
+
+.app-button-secondary:hover {
+  background: color-mix(in srgb, var(--surface) 95%, var(--primary-light) 8%);
+  border-color: color-mix(in srgb, var(--primary) 20%, var(--border));
+  transform: translateY(-1px);
+}
+
+/* Button Micro-interactions */
+.ui-button-enhance {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.ui-button-enhance:hover {
+  transform: scale(1.02);
+}
+
+.ui-button-enhance:active {
+  transform: scale(0.98);
+}
+
+.ui-button-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.ui-button-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -115%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+  transition: left 700ms ease;
+}
+
+.ui-button-shine:hover::before {
+  left: 115%;
+}
+
+/* Micro-animations */
+.animate-fade-in {
+  animation: fadeIn 300ms ease-out forwards;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Premium Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--text-secondary) 25%, transparent);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--text-secondary) 40%, transparent);
+}

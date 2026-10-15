@@ -1,0 +1,23 @@
+# Dependency directories
+node_modules/
+__pycache__/
+venv/
+.venv/
+env/
+# Environment Variables (CRITICAL)
+.env
+.env.local
+.env.*
+# Logs and OS files
+*.log
+.DS_Store
+coverage/
+# VS Code
+.vscode/
+# 
+venv/
+__pycache__/
+*.pyc
+.env
+faiss_index/
+.vscode/
